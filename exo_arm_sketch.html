@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arm Exoskeleton Design</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff41;
+            overflow-x: auto;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #00ff41;
+            padding-bottom: 15px;
+        }
+        .sketch-area {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .main-sketch {
+            flex: 2;
+            min-width: 400px;
+            background: #111;
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .specs {
+            flex: 1;
+            min-width: 300px;
+            background: #111;
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .svg-container {
+            background: #000;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .component-list {
+            margin-top: 20px;
+        }
+        .component-item {
+            background: #0a0a0a;
+            border: 1px solid #00ff41;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        .highlight {
+            color: #ffff00;
+            font-weight: bold;
+        }
+        .section-title {
+            color: #ff4081;
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+            border-bottom: 1px solid #ff4081;
+        }
+        h1 {
+            color: #00ff41;
+            text-shadow: 0 0 10px #00ff41;
+        }
+        .blink {
+            animation: blink 2s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🦾 ARM EXOSKELETON DESIGN v1.0</h1>
+            <p>Project: <span class="highlight">"Iron Arm"</span> - Single DOF Elbow Assist System</p>
+        </div>
+
+        <div class="sketch-area">
+            <div class="main-sketch">
+                <h3>MECHANICAL LAYOUT</h3>
+                <div class="svg-container">
+                    <svg width="360" height="500" viewBox="0 0 360 500">
+                        <!-- Background grid -->
+                        <defs>
+                            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#003300" stroke-width="1"/>
+                            </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#grid)" />
+                        
+                        <!-- Shoulder mount -->
+                        <rect x="80" y="50" width="60" height="40" fill="none" stroke="#00ff41" stroke-width="2" rx="5"/>
+                        <text x="110" y="75" text-anchor="middle" fill="#00ff41" font-size="10">SHOULDER</text>
+                        <text x="110" y="85" text-anchor="middle" fill="#00ff41" font-size="10">HARNESS</text>
+                        
+                        <!-- Upper arm frame -->
+                        <line x1="110" y1="90" x2="110" y2="200" stroke="#00ff41" stroke-width="4"/>
+                        <circle cx="110" cy="200" r="8" fill="none" stroke="#ff4081" stroke-width="3"/>
+                        <text x="125" y="205" fill="#ff4081" font-size="10">ELBOW PIVOT</text>
+                        
+                        <!-- Upper arm cuff -->
+                        <ellipse cx="110" cy="140" rx="25" ry="15" fill="none" stroke="#ffff00" stroke-width="2"/>
+                        <text x="145" y="145" fill="#ffff00" font-size="10">UPPER ARM</text>
+                        <text x="145" y="155" fill="#ffff00" font-size="10">CUFF</text>
+                        
+                        <!-- Motor and drive system -->
+                        <rect x="130" y="180" width="40" height="25" fill="none" stroke="#00ff41" stroke-width="2" rx="3"/>
+                        <text x="150" y="195" text-anchor="middle" fill="#00ff41" font-size="8">MOTOR</text>
+                        <circle cx="150" cy="192" r="3" fill="#00ff41"/>
+                        
+                        <!-- Cable routing -->
+                        <path d="M 150 180 Q 130 160 110 200" fill="none" stroke="#ffff00" stroke-width="2" stroke-dasharray="3,3"/>
+                        <text x="120" y="170" fill="#ffff00" font-size="8">CABLE</text>
+                        
+                        <!-- Forearm frame -->
+                        <line x1="110" y1="208" x2="160" y2="350" stroke="#00ff41" stroke-width="4"/>
+                        
+                        <!-- Forearm cuff -->
+                        <ellipse cx="140" cy="290" rx="25" ry="15" fill="none" stroke="#ffff00" stroke-width="2"/>
+                        <text x="175" y="295" fill="#ffff00" font-size="10">FOREARM</text>
+                        <text x="175" y="305" fill="#ffff00" font-size="10">CUFF</text>
+                        
+                        <!-- Hand attachment -->
+                        <rect x="150" y="340" width="30" height="20" fill="none" stroke="#00ff41" stroke-width="2" rx="5"/>
+                        <text x="165" y="355" text-anchor="middle" fill="#00ff41" font-size="8">HAND</text>
+                        
+                        <!-- Sensors -->
+                        <circle cx="95" cy="140" r="4" fill="#ff4081"/>
+                        <text x="70" y="145" fill="#ff4081" font-size="8">FORCE</text>
+                        <circle cx="125" cy="290" r="4" fill="#ff4081"/>
+                        <text x="135" y="285" fill="#ff4081" font-size="8">IMU</text>
+                        
+                        <!-- Battery pack -->
+                        <rect x="60" y="120" width="20" height="40" fill="none" stroke="#00ff41" stroke-width="2" rx="3"/>
+                        <text x="45" y="145" fill="#00ff41" font-size="8">BATTERY</text>
+                        
+                        <!-- Control box -->
+                        <rect x="200" y="200" width="50" height="30" fill="none" stroke="#ff4081" stroke-width="2" rx="5"/>
+                        <text x="225" y="218" text-anchor="middle" fill="#ff4081" font-size="10">CONTROL</text>
+                        <text x="225" y="228" text-anchor="middle" fill="#ff4081" font-size="10">UNIT</text>
+                        
+                        <!-- Wiring -->
+                        <path d="M 80 140 Q 100 180 200 215" fill="none" stroke="#ff4081" stroke-width="1" stroke-dasharray="2,2"/>
+                        <path d="M 150 192 L 200 215" fill="none" stroke="#ff4081" stroke-width="1" stroke-dasharray="2,2"/>
+                        
+                        <!-- Angle indicator -->
+                        <path d="M 110 200 A 20 20 0 0 1 125 220" fill="none" stroke="#ffff00" stroke-width="2"/>
+                        <text x="120" y="240" fill="#ffff00" font-size="8">θ = 0-120°</text>
+                        
+                        <!-- Power indicator -->
+                        <circle cx="320" cy="50" r="8" fill="#00ff41" class="blink"/>
+                        <text x="300" y="70" fill="#00ff41" font-size="10">POWER ON</text>
+                    </svg>
+                </div>
+                
+                <div class="section-title">KEY FEATURES</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="component-item">
+                        <strong>Single DOF Design</strong><br>
+                        Elbow flexion/extension only - keeps it simple but effective
+                    </div>
+                    <div class="component-item">
+                        <strong>Cable Drive Actuation</strong><br>
+                        Motor remote from joint - lighter feel, easier maintenance
+                    </div>
+                    <div class="component-item">
+                        <strong>Force Amplification</strong><br>
+                        Detects your effort, multiplies it smoothly
+                    </div>
+                    <div class="component-item">
+                        <strong>Modular Cuffs</strong><br>
+                        Adjustable for different arm sizes, padded interface
+                    </div>
+                </div>
+            </div>
+
+            <div class="specs">
+                <div class="section-title">TECHNICAL SPECIFICATIONS</div>
+                
+                <div class="component-item">
+                    <div class="highlight">ACTUATOR</div>
+                    • High-torque servo motor (20-40 Nm)<br>
+                    • Gear reduction: 50:1<br>
+                    • Cable drive with Bowden tube<br>
+                    • Max assist force: 150N
+                </div>
+
+                <div class="component-item">
+                    <div class="highlight">SENSORS</div>
+                    • Force sensor at upper arm cuff<br>
+                    • IMU for arm orientation<br>
+                    • Encoder for joint angle<br>
+                    • Current sensing for motor feedback
+                </div>
+
+                <div class="component-item">
+                    <div class="highlight">CONTROL SYSTEM</div>
+                    • Arduino Nano 33 BLE or ESP32<br>
+                    • 100Hz control loop<br>
+                    • Force amplification algorithm<br>
+                    • Safety limits and emergency stop
+                </div>
+
+                <div class="component-item">
+                    <div class="highlight">POWER</div>
+                    • 12V Li-ion battery pack<br>
+                    • 2-3 hour operation time<br>
+                    • USB-C charging port<br>
+                    • Power management circuit
+                </div>
+
+                <div class="component-item">
+                    <div class="highlight">MATERIALS</div>
+                    • 3D printed: PLA+ or PETG<br>
+                    • Frame: 20x20 aluminum extrusion<br>
+                    • Cuffs: Foam padding + velcro<br>
+                    • Cables: Bicycle brake cables
+                </div>
+
+                <div class="section-title">BUILD PHASES</div>
+                
+                <div style="color: #ffff00;">
+                    <strong>PHASE 1: MECHANICAL</strong><br>
+                    □ Design and print frame components<br>
+                    □ Assemble aluminum extrusion structure<br>
+                    □ Create comfortable cuff attachments<br>
+                    □ Install cable routing system
+                </div>
+                
+                <div style="color: #ff4081; margin-top: 10px;">
+                    <strong>PHASE 2: ELECTRICAL</strong><br>
+                    □ Wire up motor driver and sensors<br>
+                    □ Program basic force sensing<br>
+                    □ Implement safety systems<br>
+                    □ Test power management
+                </div>
+                
+                <div style="color: #00ff41; margin-top: 10px;">
+                    <strong>PHASE 3: SOFTWARE</strong><br>
+                    □ Develop control algorithms<br>
+                    □ Tune force amplification<br>
+                    □ Add user interface<br>
+                    □ Optimize performance
+                </div>
+
+                <div class="section-title">ESTIMATED COSTS</div>
+                <div class="component-item">
+                    Motor + Driver: $80<br>
+                    Sensors: $40<br>
+                    Battery: $30<br>
+                    Materials: $50<br>
+                    Electronics: $60<br>
+                    <hr style="border-color: #00ff41;">
+                    <strong>Total: ~$260</strong>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; padding: 20px; border: 2px solid #00ff41; border-radius: 10px;">
+            <h3 style="color: #ff4081;">READY TO START BUILDING?</h3>
+            <p>This design balances complexity with buildability. Single DOF keeps the mechanics simple while still providing real assistance. The cable drive system lets us keep the heavy motor away from your arm for better comfort.</p>
+            <p class="highlight">Next step: Pick your components and start with the mechanical frame!</p>
+        </div>
+    </div>
+</body>
+</html>

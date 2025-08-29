@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta viewport="width=device-width, initial-scale=1.0">
+    <title>Arm Exoskeleton BOM</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e1e2e, #2a2a3a);
+            color: #ffffff;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .summary-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .summary-card h3 {
+            margin: 0 0 10px 0;
+            color: #3b82f6;
+        }
+        .summary-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #10b981;
+        }
+        .category {
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .category-header {
+            background: linear-gradient(45deg, #6366f1, #4f46e5);
+            padding: 15px 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .category-total {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        .bom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+        .bom-table th {
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        .bom-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .bom-table tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .part-number {
+            font-family: 'Courier New', monospace;
+            background: rgba(59, 130, 246, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .supplier {
+            color: #10b981;
+            font-weight: bold;
+        }
+        .price {
+            color: #f59e0b;
+            font-weight: bold;
+        }
+        .critical {
+            background: linear-gradient(45deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+        }
+        .notes {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .notes h4 {
+            margin-top: 0;
+            color: #10b981;
+        }
+        .total-summary {
+            background: linear-gradient(45deg, #059669, #047857);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(5, 150, 105, 0.3);
+        }
+        .total-summary h2 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .breakdown-item {
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        @media (max-width: 768px) {
+            .bom-table {
+                font-size: 0.9em;
+            }
+            .bom-table th,
+            .bom-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🦾 ARM EXOSKELETON BOM</h1>
+            <p>Complete Bill of Materials - "Iron Arm" Project v1.0</p>
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h3>Total Items</h3>
+                <div class="value">47</div>
+            </div>
+            <div class="summary-card">
+                <h3>Categories</h3>
+                <div class="value">8</div>
+            </div>
+            <div class="summary-card">
+                <h3>Suppliers</h3>
+                <div class="value">6</div>
+            </div>
+            <div class="summary-card">
+                <h3>Est. Total</h3>
+                <div class="value">$284</div>
+            </div>
+        </div>
+
+        <!-- ACTUATORS & DRIVES -->
+        <div class="category">
+            <div class="category-header">
+                ⚙️ ACTUATORS & DRIVES
+                <span class="category-total">$89</span>
+            </div>
+            <table class="bom-table">
+                <thead>
+                    <tr>
+                        <th>Qty</th>
+                        <th>Part Description</th>
+                        <th>Part Number</th>
+                        <th>Supplier</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="critical">
+                        <td>1</td>
+                        <td>High Torque Servo Motor (35kg-cm)</td>
+                        <td class="part-number">DS3235MG</td>
+                        <td class="supplier">Amazon/HobbyKing</td>
+                        <td class="price">$45</td>
+                        <td class="price">$45</td>
+                        <td>Metal gear, 180° rotation</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Servo Driver Board (16-channel)</td>
+                        <td class="part-number">PCA9685</td>
+                        <td class="supplier">Adafruit</td>
+                        <td class="price">$15</td>
+                        <td class="price">$15</td>
+                        <td>I2C control, PWM output</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Cable Pulleys (6mm bore)</td>
+                        <td class="part-number">625ZZ Bearing</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$3</td>
+                        <td class="price">$6</td>
+                        <td>Sealed ball bearings</td>
+                    </tr>
+                    <tr>
+                        <td>2m</td>
+                        <td>Bicycle Brake Cable (1.5mm)</td>
+                        <td class="part-number">Shimano Y80098210</td>
+                        <td class="supplier">Local bike shop</td>
+                        <td class="price">$8</td>
+                        <td class="price">$8</td>
+                        <td>Stainless steel, low friction</td>
+                    </tr>
+                    <tr>
+                        <td>2m</td>
+                        <td>Cable Housing (5mm)</td>
+                        <td class="part-number">Jagwire 4mm</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$15</td>
+                        <td class="price">$15</td>
+                        <td>Low compression housing</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SENSORS -->
+        <div class="category">
+            <div class="category-header">
+                📡 SENSORS & FEEDBACK
+                <span class="category-total">$42</span>
+            </div>
+            <table class="bom-table">
+                <thead>
+                    <tr>
+                        <th>Qty</th>
+                        <th>Part Description</th>
+                        <th>Part Number</th>
+                        <th>Supplier</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="critical">
+                        <td>1</td>
+                        <td>Load Cell (0-20kg, S-Type)</td>
+                        <td class="part-number">TAL220B-20KG</td>
+                        <td class="supplier">SparkFun</td>
+                        <td class="price">$15</td>
+                        <td class="price">$15</td>
+                        <td>For force sensing</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Load Cell Amplifier (HX711)</td>
+                        <td class="part-number">HX711</td>
+                        <td class="supplier">SparkFun</td>
+                        <td class="price">$10</td>
+                        <td class="price">$10</td>
+                        <td>24-bit ADC</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>9-DOF IMU (MPU9250)</td>
+                        <td class="part-number">MPU-9250</td>
+                        <td class="supplier">Adafruit</td>
+                        <td class="price">$15</td>
+                        <td class="price">$15</td>
+                        <td>Gyro/Accel/Compass</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Hall Effect Encoder</td>
+                        <td class="part-number">AS5600</td>
+                        <td class="supplier">DigiKey</td>
+                        <td class="price">$2</td>
+                        <td class="price">$2</td>
+                        <td>12-bit magnetic encoder</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ELECTRONICS -->
+        <div class="category">
+            <div class="category-header">
+                🔌 CONTROL ELECTRONICS
+                <span class="category-total">$45</span>
+            </div>
+            <table class="bom-table">
+                <thead>
+                    <tr>
+                        <th>Qty</th>
+                        <th>Part Description</th>
+                        <th>Part Number</th>
+                        <th>Supplier</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="critical">
+                        <td>1</td>
+                        <td>Arduino Nano 33 BLE</td>
+                        <td class="part-number">ABX00030</td>
+                        <td class="supplier">Arduino Store</td>
+                        <td class="price">$22</td>
+                        <td class="price">$22</td>
+                        <td>Main controller with BLE</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Prototype PCB (70x90mm)</td>
+                        <td class="part-number">Generic</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$5</td>
+                        <td class="price">$5</td>
+                        <td>Through-hole board</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Emergency Stop Button</td>
+                        <td class="part-number">16mm Mushroom</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$8</td>
+                        <td class="price">$8</td>
+                        <td>Red, normally closed</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>LED Indicators (RGB)</td>
+                        <td class="part-number">WS2812B</td>
+                        <td class="supplier">Adafruit</td>
+                        <td class="price">$2</td>
+                        <td class="price">$6</td>
+                        <td>Status indicators</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Buzzer (12V)</td>
+                        <td class="part-number">CEM-1203</td>
+                        <td class="supplier">DigiKey</td>
+                        <td class="price">$4</td>
+                        <td class="price">$4</td>
+                        <td>Audio feedback</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- POWER -->
+        <div class="category">
+            <div class="category-header">
+                🔋 POWER SYSTEM
+                <span class="category-total">$38</span>
+            </div>
+            <table class="bom-table">
+                <thead>
+                    <tr>
+                        <th>Qty</th>
+                        <th>Part Description</th>
+                        <th>Part Number</th>
+                        <th>Supplier</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Li-ion Battery Pack (12V, 2200mAh)</td>
+                        <td class="part-number">18650x3 Pack</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$25</td>
+                        <td class="price">$25</td>
+                        <td>With BMS protection</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>DC-DC Buck Converter (12V to 5V)</td>
+                        <td class="part-number">LM2596</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$3</td>
+                        <td class="price">$3</td>
+                        <td>3A output capacity</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>USB-C Charging Module</td>
+                        <td class="part-number">TP4056 USB-C</td>
+                        <td class="supplier">AliExpress</td>
+                        <td class="price">$5</td>
+                        <td class="price">$5</td>
+                        <td>With protection circuit</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Power Switch (Rocker)</td>
+                        <td class="part-number">KCD1-101</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$2</td>
+                        <td class="price">$2</td>
+                        <td>SPST, 10A rating</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Voltage Monitor Module</td>
+                        <td class="part-number">Generic 3S Monitor</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$3</td>
+                        <td class="price">$3</td>
+                        <td>Battery level display</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MECHANICAL -->
+        <div class="category">
+            <div class="category-header">
+                🔧 MECHANICAL COMPONENTS
+                <span class="category-total">$52</span>
+            </div>
+            <table class="bom-table">
+                <thead>
+                    <tr>
+                        <th>Qty</th>
+                        <th>Part Description</th>
+                        <th>Part Number</th>
+                        <th>Supplier</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2m</td>
+                        <td>Aluminum Extrusion (20x20mm)</td>
+                        <td class="part-number">2020 T-Slot</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$15</td>
+                        <td class="price">$15</td>
+                        <td>Main structural frame</td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>T-Slot Nuts (M5)</td>
+                        <td class="part-number">2020 Drop-in</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$0.50</td>
+                        <td class="price">$10</td>
+                        <td>For mounting brackets</td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>Socket Head Screws (M5x16)</td>
+                        <td class="part-number">DIN 912 M5x16</td>
+                        <td class="supplier">McMaster-Carr</td>
+                        <td class="price">$0.30</td>
+                        <td class="price">$6</td>
+                        <td>Stainless steel</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ball Bearings (608ZZ)</td>
+                        <td class="part-number">608ZZ</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$2</td>
+                        <td class="price">$4</td>
+                        <td>For pivot joints</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Shaft Collars (8mm)</td>
+                        <td class="part-number">8mm Clamp</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$2</td>
+                        <td class="price">$8</td>
+                        <td>Aluminum, set screw type</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Steel Rod (8mm x 500mm)</td>
+                        <td class="part-number">8mm Precision Rod</td>
+                        <td class="supplier">McMaster-Carr</td>
+                        <td class="price">$9</td>
+                        <td class="price">$9</td>
+                        <td>For pivot axles</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3D PRINTED PARTS -->
+        <div class="category">
+            <div class="category-header">
+                🖨️ 3D PRINTED COMPONENTS
+                <span class="category-total">$8</span>
+            </div>
+            <table class="bom-table">
+                <thead>
+                    <tr>
+                        <th>Qty</th>
+                        <th>Part Description</th>
+                        <th>Material</th>
+                        <th>Print Time</th>
+                        <th>Weight</th>
+                        <th>Cost</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2</td>
+                        <td>Upper/Lower Arm Cuff Brackets</td>
+                        <td>PETG</td>
+                        <td>3h each</td>
+                        <td>120g total</td>
+                        <td class="price">$3</td>
+                        <td>High strength required</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Elbow Joint Housing</td>
+                        <td>PETG</td>
+                        <td>2h</td>
+                        <td>80g</td>
+                        <td class="price">$2</td>
+                        <td>Critical load bearing</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Motor Mount Bracket</td>
+                        <td>PLA+</td>
+                        <td>1.5h</td>
+                        <td>60g</td>
+                        <td class="price">$1.50</td>
+                        <td>Motor mounting</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Control Box Housing</td>
+                        <td>PLA+</td>
+                        <td>2h</td>
+                        <td>90g</td>
+                        <td class="price">$1.50</td>
+                        <td>Electronics enclosure</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- COMFORT & INTERFACE -->
+        <div class="category">
+            <div class="category-header">
+                🛡️ COMFORT & USER INTERFACE
+                <span class="category-total">$25</span>
+            </div>
+            <table class="bom-table">
+                <thead>
+                    <tr>
+                        <th>Qty</th>
+                        <th>Part Description</th>
+                        <th>Part Number</th>
+                        <th>Supplier</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1m²</td>
+                        <td>Foam Padding (10mm thick)</td>
+                        <td class="part-number">EVA Foam</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$8</td>
+                        <td class="price">$8</td>
+                        <td>For cuff padding</td>
+                    </tr>
+                    <tr>
+                        <td>2m</td>
+                        <td>Velcro Straps (50mm wide)</td>
+                        <td class="part-number">3M Dual Lock</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$6</td>
+                        <td class="price">$12</td>
+                        <td>Cuff attachment system</td>
+                    </tr>
+                    <tr>
+                        <td>1m</td>
+                        <td>Breathable Fabric</td>
+                        <td class="part-number">Mesh Athletic</td>
+                        <td class="supplier">Local fabric store</td>
+                        <td class="price">$5</td>
+                        <td class="price">$5</td>
+                        <td>Skin contact layer</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MISCELLANEOUS -->
+        <div class="category">
+            <div class="category-header">
+                🔗 MISCELLANEOUS
+                <span class="category-total">$15</span>
+            </div>
+            <table class="bom-table">
+                <thead>
+                    <tr>
+                        <th>Qty</th>
+                        <th>Part Description</th>
+                        <th>Part Number</th>
+                        <th>Supplier</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>5m</td>
+                        <td>22 AWG Stranded Wire</td>
+                        <td class="part-number">Various colors</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$5</td>
+                        <td class="price">$5</td>
+                        <td>Internal wiring</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Heat Shrink Tubing Kit</td>
+                        <td class="part-number">Assorted sizes</td>
+                        <td class="supplier">Amazon</td>
+                        <td class="price">$5</td>
+                        <td class="price">$5</td>
+                        <td>Wire protection</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Cable Ties (Small)</td>
+                        <td class="part-number">4" Black Nylon</td>
+                        <td class="supplier">Home Depot</td>
+                        <td class="price">$0.50</td>
+                        <td class="price">$5</td>
+                        <td>Wire management</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="notes">
+            <h4>📋 PROCUREMENT NOTES</h4>
+            <ul>
+                <li><strong>Critical Path Items:</strong> Motor, Load Cell, Arduino - order these first</li>
+                <li><strong>Long Lead Times:</strong> Custom aluminum extrusion cuts (1-2 weeks)</li>
+                <li><strong>Alternatives:</strong> Can substitute ESP32 for Arduino Nano if BLE not needed</li>
+                <li><strong>Bulk Discounts:</strong> Consider buying fasteners in larger quantities</li>
+                <li><strong>Local Sources:</strong> Check local makerspace for 3D printing to save costs</li>
+            </ul>
+        </div>
+
+        <div class="total-summary">
+            <h2>💰 TOTAL PROJECT COST: $284</h2>
+            <div class="breakdown">
+                <div class="breakdown-item">
+                    <strong>Actuators</strong><br>$89 (31%)
+                </div>
+                <div class="breakdown-item">
+                    <strong>Sensors</strong><br>$42 (15%)
+                </div>
+                <div class="breakdown-item">
+                    <strong>Electronics</strong><br>$45 (16%)
+                </div>
+                <div class="breakdown-item">
+                    <strong>Power</strong><br>$38 (13%)
+                </div>
+                <div class="breakdown-item">
+                    <strong>Mechanical</strong><br>$52 (18%)
+                </div>
+                <div class="breakdown-item">
+                    <strong>Other</strong><br>$18 (7%)
+                </div>
+            </div>
+            <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+                ✅ Under budget target of $300 | 🚀 Ready to order and build!
+            </p>
+        </div>
+    </div>
+</body>
+</html>
