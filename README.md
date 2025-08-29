@@ -25,17 +25,22 @@ A single degree-of-freedom arm exoskeleton that provides force amplification for
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- 3D printer (200x200x200mm minimum build volume)
-- Basic electronics tools (soldering iron, multimeter)
-- Arduino IDE or PlatformIO
-- CAD software (Fusion 360, SolidWorks, or FreeCAD)
+## 🚀 Quick Start
 
-### Build Phases
-1. **Mechanical Assembly** (15-20 hours)
-2. **Electronics Integration** (10-15 hours) 
-3. **Software Development** (10-15 hours)
-4. **Testing & Tuning** (5-10 hours)
+### Prerequisites
+- **Development Tools**: Text-to-CAD and PI Planner (build these first!)
+- **Hardware**: 3D printer (200x200x200mm minimum build volume)  
+- **Skills**: Basic electronics, 3D printing, Arduino/Python programming
+- **Optional**: Raspberry Pi for advanced features
+
+### Recommended Build Sequence
+```
+Week 1-2: 🛠️  Build Text-to-CAD → Design all mechanical parts
+Week 3-4: 🔧  Phase 1 Build → Print and assemble mechanics  
+Week 5:   📱  Build PI Planner → Plan electronics integration
+Week 6-7: ⚡  Phase 2 Build → Wire and program electronics
+Week 8:   🎯  Testing & Tuning → Optimize performance
+```
 
 ## 📋 Bill of Materials
 
@@ -88,7 +93,43 @@ User Input → Force Sensor → Controller → Motor Driver → Servo Motor
 - **Impedance Control** - Variable stiffness/damping
 - **Manual Mode** - Direct motor control via app
 
-## 📁 Project Structure
+## 🔗 Project Ecosystem
+
+**Iron Arm** is part of a connected suite of development tools designed to streamline the entire exoskeleton development process:
+
+### Related Projects
+- **[Text to CAD Generator](../text-to-cad/)** - Generate 3D models from natural language for rapid prototyping of brackets and housings
+- **[Project PI Planner](../pi-planner/)** - Visual GPIO planning tool for organizing sensor and actuator connections
+- **Iron Arm** (this project) - The complete arm exoskeleton system
+
+### Development Workflow
+```
+1. Plan Electronics → Project PI Planner → GPIO allocation
+2. Design Components → Text to CAD → 3D printed parts  
+3. Build System → Iron Arm → Complete exoskeleton
+```
+
+## 🏗️ Development Strategy
+
+**Iron Arm** follows a tool-driven development approach, building supporting applications first to accelerate the main build:
+
+### Development Phases
+```
+Phase 0: Tool Development (Weeks 1-5)
+├── Week 1-2: Text to CAD Generator → Design all mechanical components  
+├── Week 3-4: Phase 1 Build → Complete mechanical assembly
+└── Week 5: PI Planner → Plan electronics integration
+
+Phase 1: Electronics & Software (Weeks 6-8)  
+├── Week 6-7: Electronics Integration → Wire and test systems
+└── Week 8: Software Development → Control algorithms and tuning
+```
+
+### Tool Integration Benefits
+- **Design Iteration** - Rapidly prototype components with Text-to-CAD
+- **Validated Mechanics** - Prove physical design before electronics complexity
+- **Planned Electronics** - Systematic GPIO allocation prevents wiring conflicts
+- **Code Generation** - Jump-start software with PI Planner templates
 
 ```
 iron-arm/
@@ -97,20 +138,26 @@ iron-arm/
 │   ├── assembly-guide.md     # Step-by-step build instructions
 │   ├── bill-of-materials.md  # Detailed BOM with suppliers
 │   ├── safety-manual.md      # Safety procedures and warnings
+│   ├── gpio-planning.md      # Integration with PI Planner
 │   └── troubleshooting.md    # Common issues and solutions
 ├── hardware/                 # Physical design files
 │   ├── cad/                  # 3D CAD files (Fusion 360)
 │   ├── stl/                  # Ready-to-print STL files
 │   ├── drawings/             # Technical drawings (PDF)
+│   ├── text-to-cad/         # Natural language CAD commands
 │   └── electronics/          # PCB designs and schematics
 ├── software/                 # All code
 │   ├── arduino/              # Main controller code
+│   ├── pi-integration/       # Raspberry Pi GPIO code
 │   ├── calibration/          # Sensor calibration utilities
 │   ├── testing/              # Test and validation code
 │   └── mobile-app/           # Optional smartphone app
 ├── simulations/              # Analysis and modeling
 │   ├── mechanical/           # FEA and kinematic models
 │   └── control/              # Control system modeling
+├── tools/                    # Development utilities
+│   ├── text-to-cad/         # CAD generation scripts
+│   └── gpio-planner/        # Pin planning utilities
 └── testing/                  # Test data and reports
     ├── bench-tests/          # Component validation
     ├── integration/          # System-level tests
@@ -119,50 +166,85 @@ iron-arm/
 
 ## 🛠️ Build Instructions
 
-### Phase 1: Mechanical Assembly
+### Phase 0: Tool Development & Mechanical Build
 
-#### 1.1 Frame Construction
+#### Step 1: Text-to-CAD Development (Week 1-2)
+**🔗 Priority: Build [Text to CAD Generator](../text-to-cad/) first**
+
+1. **Set up Text-to-CAD environment**
+2. **Design Iron Arm components using natural language:**
+   ```
+   Create upper arm cuff bracket: gray box with width 12, height 4, depth 2
+   Make elbow joint housing: black cylinder with radius 3.5 and height 2.8  
+   Generate motor mount: gray bracket with width 4.5, height 6, depth 3
+   Create control box: blue enclosure with width 8, height 5, depth 3
+   ```
+3. **Refine designs** through iterative text commands
+4. **Export STL files** for all mechanical components
+5. **Document successful commands** for future use
+
+#### Step 2: Mechanical Assembly (Week 3-4)
+**Prerequisites: Completed Text-to-CAD development with exported STLs**
+
+##### 2.1 Frame Construction
 ```bash
 # Cut aluminum extrusion to lengths:
-# - Upper arm: 300mm
-# - Forearm: 280mm  
+# - Upper arm: 300mm  
+# - Forearm: 280mm
 # - Cross braces: 2x 150mm
 ```
 
-#### 1.2 3D Printing
-Print all components in this order (total ~8 hours print time):
+##### 2.2 3D Printing
+Print components designed in Step 1 (~8 hours total print time):
 1. **Upper Arm Cuff Bracket** - Use PETG, 0.2mm layers, 100% infill
-2. **Forearm Cuff Bracket** - Use PETG, 0.2mm layers, 100% infill  
-3. **Elbow Joint Housing** - Use PETG, 0.15mm layers, 100% infill
+2. **Forearm Cuff Bracket** - Use PETG, 0.2mm layers, 100% infill
+3. **Elbow Joint Housing** - Use PETG, 0.15mm layers, 100% infill  
 4. **Motor Mount** - Use PLA+, 0.2mm layers, 80% infill
 5. **Control Box** - Use PLA+, 0.2mm layers, 50% infill
 
-#### 1.3 Assembly Steps
-1. Install bearings in elbow joint housing
-2. Mount servo motor to bracket
+##### 2.3 Assembly Steps
+1. Install bearings in elbow joint housing (Text-to-CAD designed)
+2. Mount servo motor to bracket (custom generated mount)
 3. Route cables through housing system
-4. Attach cuffs with padding
+4. Attach cuffs with padding to custom brackets
 5. Install cable tensioning system
+6. **Validate mechanical function** - Test full range of motion
 
-### Phase 2: Electronics Integration
+#### Step 3: PI Planner Development (Week 5)
+**🔗 Build [Project PI Planner](../pi-planner/) for electronics integration**
 
-#### 2.1 Circuit Assembly
-- Solder prototype PCB following schematic in `/hardware/electronics/`
-- Wire power distribution system with proper fusing
-- Install emergency stop in accessible location
-- Connect all sensor modules
+1. **Develop GPIO planning interface**
+2. **Configure Iron Arm sensor suite:**
+   - Load Cell + HX711 amplifier
+   - MPU9250 IMU
+   - Emergency stop button
+   - Status LEDs  
+   - Servo motor control
+   - Rotary encoder
+3. **Generate pin allocation** avoiding conflicts
+4. **Export Python code templates** with Iron Arm integration
+5. **Create wiring diagrams** for assembly reference
 
-#### 2.2 Sensor Calibration
-```arduino
-// Run calibration routine
-void calibrateSensors() {
-    calibrateLoadCell();    // Zero and span calibration
-    calibrateIMU();         // Magnetometer and gyro offsets
-    calibrateEncoder();     // Set zero position
-}
-```
+### Phase 1: Electronics Integration (Week 6-7)
 
-### Phase 3: Software Development
+#### Electronics Assembly  
+**Prerequisites: Completed PI Planner with validated GPIO plan**
+
+1. **Follow PI Planner GPIO allocation** exactly
+2. **Wire according to generated diagrams**
+3. **Install emergency stop** in accessible location  
+4. **Mount sensors in Text-to-CAD housings**
+5. **Test each subsystem** before integration
+
+### Phase 2: Software Development (Week 8)
+
+#### Control System Implementation
+**Prerequisites: Mechanical assembly complete, electronics wired per PI Planner**
+
+1. **Flash PI Planner generated code** as starting framework
+2. **Implement control algorithms** for force amplification
+3. **Add safety systems** with emergency stop integration
+4. **Tune performance** and optimize response
 
 #### 3.1 Control Algorithm
 Core control loop implements force amplification:
